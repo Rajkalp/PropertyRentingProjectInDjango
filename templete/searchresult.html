@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<center>
+    {% if data %}
+        {% for i in data %}
+            <!-- {{ i.city }}
+            {{i}} -->
+            <div class="card my-3 mx-5">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <!-- <img src="..." class="card-img" alt="..."> -->
+                <p class="text-left">photo</p>    
+                  </div>
+                  <div class="col-md-5">
+                    <div class="card-body">
+                      <h5 class="card-title text-left m-0 p-0">{{i.landmark}}</h5>
+                      <p class="card-text text-left m-0 p-0">{{i.address1}}</p>
+                      <p class="card-text text-left m-0 p-0">{{i.address2}}, {{i.city}}</p>                      
+                      <p class="card-text text-left m-0 p-0">{{i.region}}-{{i.zipcode}}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="card-body">
+                        <p class="card-text text-left">Rent per month: {{i.rent}}</p>
+                        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                        <a class="btn btn-primary mr-5" href="#">Book</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        {% endfor %}
+    {% else %}
+        no Data
+    {% endif %}
+    
+</center>
+{% endblock %}

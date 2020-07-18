@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<center>
+    <a class="float-right btn btn-dark mr-4 mt-4" href="/uploadproperty">Upload Property</a>  
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table text-center">
+                    <thead>
+                      <tr>
+                        <th scope="col">Landmark</th>
+                        <th scope="col">Address Line 1</th>
+                        <th scope="col">Address Line 2</th>
+                        <th scope="col">City, Region, Zipcode</th>
+                        <th scope="col">Rented</th>
+                        <th scope="col">Options(edit/delete)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for properties in property%}
+                      <tr>
+                        <td>{{ properties.landmark }}</td>
+                        <td>{{ properties.address1 }}</td>
+                        <td>{{ properties.address2 }}</td>
+                        <td>{{ properties.city}}, {{ properties.region}}, {{ properties.zipcode}}</td>
+                        <td>{{ properties.rent }}</td>
+                        <td><a href="#">Edit</a><button class="btn btn-danger ml-4">Delete</button></td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+       
+</center>
+{% endblock %}
