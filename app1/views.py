@@ -17,6 +17,7 @@ from .models import Property
 # Create your views here.
 def index(request):
     if (request.user.is_authenticated):
+        print("authenticated")
         if request.user.groups.filter(name='lessee').exists():
             return redirect("/landlorddash")
         elif request.user.groups.filter(name='tenant').exists():
@@ -26,18 +27,26 @@ def index(request):
         if (request.method == "POST"):
             username = request.POST.get("usernamelogin")
             password = request.POST.get("passwordlogin")
+            print("username", username, "pwd", password)
         
             user = authenticate(request, username=username, password=password)
+            print("user is ",user)   
 
             if (user is not None):
-                login(request, user)    
+                login(request, user)  
                 return redirect('/')
-            else:
-                messages.info(request, "Username Or Password is incorrect")
         elif (request.method =="GET"):
             print("get method")
-        form = CreateUserForm(request.POST)
-        return render(request, "login.html", {'form': form})
+            return render(request, "login.html")
+
+def tenantRegister(request):
+    form = CreateUserForm(request.POST)
+    if(form.is_valid()):
+        user = form.save()
+        group = Group.objects.get(name="tenant")
+        user.groups.add(group)
+        return redirect("/")
+    return render(request, "tenantregister.html", {'form': form})
 
 def landlordRegister(request):
     if (request.user.is_authenticated):
@@ -52,6 +61,7 @@ def landlordRegister(request):
                 group = Group.objects.get(name="lessee")
                 user.groups.add(group)
                 # user.groups.remove(group)      #remove from group
+                return redirect("/")
         return render(request, "landlordregister.html",  {'form': form})
 
 
@@ -92,7 +102,9 @@ def landlorddash(request):
     
 
 def userdashboard(request):
-    return render(request, "userdashboard.html")
+    result = Property.objects.filter(rentedby=request.user.username).values()
+    print(request.user.username)
+    return render(request, "userdashboard.html", {'properties': result})
 
 def uploadproperty(request):
     form = UploadProperty(request.POST)
@@ -111,8 +123,21 @@ def uploadproperty(request):
             return redirect("/")
     return render(request, "uploadproperty.html", {'form': form})
 
+def deleteproperty(request, id):
+    Property.objects.filter(id=id).delete()
+    return redirect("/")
+
 def searchresult(request):
     query = request.GET.get('search')
     result = Property.objects.filter(city=query).values()
     print(result.values('address1'))
     return render(request, "searchresult.html", {'data': result})
+
+def bookproperty(request, id, userid):
+    print(id, userid)
+    Property.objects.filter(id=id).update(rentedby=userid)
+    return redirect("/")
+
+def removeproperty(request, id):
+    Property.objects.filter(id=id).update(rentedby=None)
+    return redirect('/userdash')

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
+
 <center>
     <a class="float-right btn btn-dark mr-4 mt-4" href="/uploadproperty">Upload Property</a>  
     <div class="container">
@@ -15,6 +16,7 @@
                         <th scope="col">City, Region, Zipcode</th>
                         <th scope="col">Rented</th>
                         <th scope="col">Options(edit/delete)</th>
+                        <th scope="col">Rented by</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -25,7 +27,8 @@
                         <td>{{ properties.address2 }}</td>
                         <td>{{ properties.city}}, {{ properties.region}}, {{ properties.zipcode}}</td>
                         <td>{{ properties.rent }}</td>
-                        <td><a href="#">Edit</a><button class="btn btn-danger ml-4">Delete</button></td>
+                        <td><a href="#">Edit</a><a href="/deleteproperty/{{ properties.id }}" class="btn btn-danger ml-4">Delete</a></td>
+                        <td>{{ properties.rentedby }}</td>
                       </tr>
                     {% endfor %}
                     </tbody>

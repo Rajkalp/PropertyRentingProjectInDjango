@@ -12,3 +12,4 @@ class Property(models.Model):
     zipcode = models.IntegerField()
     rent = models.IntegerField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    rentedby = models.CharField(max_length=200,null=True, blank=True)

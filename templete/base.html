@@ -21,7 +21,9 @@
       {% if user.is_authenticated %}
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
+          {% ifequal user.groups.all.0.name "tenant" %}
             <a class="nav-link" href="/userdash">Profile</a>
+          {% endifequal %}
           </li>
           <li class="nav-item">
             {% ifequal user.groups.all.0.name "lessee" %}

@@ -4,8 +4,9 @@
 <center>
     {% if data %}
         {% for i in data %}
-            <!-- {{ i.city }}
-            {{i}} -->
+            {{i.id}}
+            {{user.username}}
+            {% if i.rentedby is None %}
             <div class="card my-3 mx-5">
                 <div class="row no-gutters">
                   <div class="col-md-4">
@@ -24,11 +25,12 @@
                     <div class="card-body">
                         <p class="card-text text-left">Rent per month: {{i.rent}}</p>
                         <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-                        <a class="btn btn-primary mr-5" href="#">Book</a>
+                        <a class="btn btn-primary mr-5" href="/bookproperty/{{i.id}}/{{user.username}}">Book</a>
                     </div>
                   </div>
                 </div>
               </div>
+            {% endif %}
         {% endfor %}
     {% else %}
         no Data

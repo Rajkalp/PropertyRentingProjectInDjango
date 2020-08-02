@@ -20,9 +20,13 @@ from app1 import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('logout', views.logoutuser, name="logoutuser"),
+    path('tenantregister', views.tenantRegister, name="tenantRegister"),
     path('landlorddash', views.landlorddash, name="landlorddash"),
     path('landlordregister', views.landlordRegister, name="landlordRegister"),
+    path('bookproperty/<int:id>/<slug:userid>', views.bookproperty, name="bookproperty"),
+    path('removeproperty/<int:id>', views.removeproperty, name="removeproperty"),
     path('uploadproperty', views.uploadproperty, name="uploadproperty"),
+    path('deleteproperty/<int:id>', views.deleteproperty, name="deleteproperty"),
     path('userdash', views.userdashboard, name="userdashboard"),
     path('register', views.register, name="register"),
     path('home', views.home, name="home"),
